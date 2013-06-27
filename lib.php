@@ -462,7 +462,7 @@ class elis2_lib{
 					
 					#dialog
 					$dialog_html.='<div id="'.$act_arr[$i].'_dialog_'.$ct.'" style="float:center;">
-					<div style="overflow:auto;" id="'.$act_arr[$i].'_dialog_content_'.$ct.'"></div></div>';
+					<div style="overflow:auto;" id="'.$act_arr[$i].'_dialog_content_'.$ct.'" class="dialog_content"></div></div>';
 				}
 			}
 		}

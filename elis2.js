@@ -252,7 +252,8 @@ var block_elis2 = (function() {
         rateMouseOverEffect: function(score,isbn){
         	for(var i=1;i<=score;i++){
         		YUI().use('node', 'button', function(Y) {
-            		Y.one('#rate_'+isbn+'_'+i).set('src','images/starOn.gif');
+        			if(Y.one('#rate_'+isbn+'_'+i)!=null)
+        				Y.one('#rate_'+isbn+'_'+i).set('src','images/starOn.gif');
         		});
         	}	
         },
@@ -375,6 +376,13 @@ var block_elis2 = (function() {
         },
 
         elis2OpenActDialog: function(ct,isbn,act_name,width,height,visible,header_caption,show_remove,blockid,gbook_id){
+        	/*var wc_cr	= Y.all('.wc_criteria');
+        	var total = 0;
+        	wc_cr.each(function (taskNode) {
+        		taskNode.remove();
+    			
+    			
+    		});*/
         	
         	YUI().use('io', function (Y) {
         		var data = { isbn:isbn,act_name:act_name,task:'render_act_form'};
@@ -386,7 +394,7 @@ var block_elis2 = (function() {
         	            	YUI().use('json-parse', 'json-stringify', function (Y) {
         	            		var json = Y.JSON.parse(result.responseText);
         	            		YUI().use('node', function(Y) {
-
+        	            			Y.all('.dialog_content').setContent('');
         	            			Y.one('#'+act_name+'_dialog_content_'+ct).set('offsetHeight',height-50);
         	            			Y.one('#'+act_name+'_dialog_content_'+ct).setContent(json.return_html);
         	            			block_elis2.initDialog(header_caption,act_name+'_dialog_'+ct,isbn,act_name,width,height,visible,show_remove,blockid,gbook_id);
@@ -570,9 +578,14 @@ var block_elis2 = (function() {
         	        panel.hide();
         	        panel.destroy();
         	        
+        	        //langchallenging_dialog_content_2
         	        var ele_arr = element_id.split("_");
         	        if(Y.one('#activity_div_'+isbn))
         	        	Y.one('#activity_div_'+isbn).append('<div id="'+element_id+'" style="float:center;"><div style="overflow:auto;" id="'+ele_arr[0]+'_'+ele_arr[1]+'_content_'+ele_arr[2]+'"></div></div>');
+        	        
+        	        /*if(Y.one('#'+ele_arr[0]+'_dialog_content_'+ele_arr[2])){
+        	        	Y.one('#'+ele_arr[0]+'_dialog_content_'+ele_arr[2]).setContent('');
+        	        }*/
         	        
         	       	Y.one('#explain_div').setContent('<div id="explain_dialog" style="float:center;"><div style="overflow:auto;" id="explain_dialog_content"></div></div>');
         	    }
@@ -760,6 +773,7 @@ var block_elis2 = (function() {
         				len++;
         			total++;
         		});
+        		
         		if(len==total)
         			block_elis2.elis2EnableSubmit();
         		else
